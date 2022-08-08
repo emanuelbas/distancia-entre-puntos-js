@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Logistica</title>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+	<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+	<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+	<script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+</head>
+<body>
+	<h1>Logistica</h1>
+	<p id="distancia"></p>
+	<div id="map" style="height: 500px;"></div>
+
+	<script type="text/javascript">
+		var map = L.map('map').setView([-34.92145, -57.95453], 13);
+
+		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		    maxZoom: 19,
+		    attribution: '© OpenStreetMap'
+		}).addTo(map);
+
+		let control = L.Routing.control({
+		  waypoints: [
+		    L.latLng(-34.92145, -57.95453),
+		    L.latLng(-34.92545, -57.95053)
+		  ]
+		}).addTo(map);
+
+		control.on("routesfound",function(e){
+			let distancia = e.routes[0].summary.totalDistance;
+			document.getElementById("distancia").innerText = "La distancia entre los puntos es " + distancia + " mts."
+		})
+	</script>
+</body>
+</html>
